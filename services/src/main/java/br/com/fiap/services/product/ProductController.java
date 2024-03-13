@@ -1,5 +1,6 @@
 package br.com.fiap.services.product;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class ProductController {
     }
 
     @PostMapping
-    ResponseEntity<ProductResponse> create(@RequestBody ProductResponse productResponse) {
+    ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductResponse productResponse) {
         Product product = productService.create(productResponse);
 
         return ResponseEntity.ok(new ProductResponse(product));
@@ -37,7 +38,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody ProductUpdateRequest productUpdateRequest) {
+    ResponseEntity<ProductResponse> update(@Valid @PathVariable Long id, @RequestBody ProductUpdateRequest productUpdateRequest) {
         Product product = productService.update(id, productUpdateRequest);
 
         return ResponseEntity.ok(new ProductResponse(product));
