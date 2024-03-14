@@ -22,12 +22,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Page<User> findAll(Pageable pageable) {
-       return   userRepository.findAll(pageable);
+    public User update(UserRequest userRequest, Long id) {
+        User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
+        user.update(userRequest);
+        return userRepository.save(user);
     }
 
-    public Page<User> search(UserResponse userResponse, Pageable pageable) {
-       return userRepository.search(userResponse.name(), userResponse.email(), userResponse.cpf(), userResponse.passport(), pageable);
+    public Page<User> findAll(Pageable pageable) {
+       return   userRepository.findAll(pageable);
     }
 
     public User findById(Long id) {

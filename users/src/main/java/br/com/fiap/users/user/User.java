@@ -71,4 +71,15 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public void update(UserRequest userRequest) {
+        this.name = userRequest.name();
+        this.country = userRequest.country();
+        this.cpf = userRequest.cpf();
+        this.passport = userRequest.passport();
+        this.birthDate = userRequest.birthDate();
+        this.address = userRequest.address();
+        this.phone = userRequest.phone();
+        this.email = userRequest.email();
+    }
 }

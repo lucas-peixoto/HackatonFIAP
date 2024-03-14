@@ -18,6 +18,7 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UserRequest request) {
         User user = userService.create(request);
+
         return ResponseEntity.ok(new UserResponse(user));
     }
 
@@ -30,12 +31,14 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable) {
         Page<User> users = userService.findAll(pageable);
+
         return ResponseEntity.ok(users.map(UserResponse::new));
     }
 
-    @PostMapping("/user/search")
-    public ResponseEntity<Page<UserResponse>> search(@RequestBody UserResponse userResponse, Pageable pageable) {
-        Page<User> rooms = userService.search(userResponse, pageable);
-        return ResponseEntity.ok(rooms.map(UserResponse::new));
+    @PutMapping("/user/{id}")
+    public ResponseEntity<UserResponse> update(@Valid @RequestBody UserRequest userRequest, @PathVariable Long id) {
+        User user = userService.update(userRequest, id);
+
+        return ResponseEntity.ok(new UserResponse(user));
     }
 }
