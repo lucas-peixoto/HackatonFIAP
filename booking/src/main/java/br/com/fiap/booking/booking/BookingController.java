@@ -4,8 +4,7 @@ import br.com.fiap.booking.room.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BookingController {
@@ -19,14 +18,20 @@ public class BookingController {
     }
 
     @PostMapping("/rooms/search")
-    public ResponseEntity<Page<RoomResponse>> searchRooms(@Valid RoomSearchRequest roomSearchRequest) {
+    public ResponseEntity<Page<RoomResponse>> searchRooms(@Valid @RequestBody RoomSearchRequest roomSearchRequest) {
         Page<Room> roomsAvailable = roomService.search(roomSearchRequest);
         return ResponseEntity.ok(roomsAvailable.map(RoomResponse::new));
     }
 
-//    @PostMapping("/booking/start")
-//    public ResponseEntity<BookingResponse> startBooking(@Valid BookingStartRequest bookingStartRequest) {
-//        Booking booking = bookingService.start(bookingStartRequest);
-//        return ResponseEntity.ok(new BookingStartResponse(booking));
-//    }
+    @PostMapping("/booking/start")
+    public ResponseEntity<BookingResponse> startBooking(@Valid @RequestBody BookingStartRequest bookingStartRequest) {
+        Booking booking = bookingService.start(bookingStartRequest);
+        return ResponseEntity.ok(new BookingResponse(booking));
+    }
+
+    @PostMapping("/booking/{id}/confirm")
+    public ResponseEntity<BookingResponse> confirm(@PathVariable Long id) {
+        Booking booking = bookingService.confirm(id);
+        return ResponseEntity.ok(new BookingResponse(booking));
+    }
 }
