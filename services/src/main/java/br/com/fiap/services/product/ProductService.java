@@ -15,8 +15,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product create(ProductResponse productResponse) {
-        Product product = new Product(productResponse.name(), productResponse.price(), productResponse.type());
+    public Product create(ProductCreateRequest productCreateRequest) {
+        Product product = new Product(productCreateRequest.name(), productCreateRequest.price(), productCreateRequest.type());
 
         return productRepository.save(product);
     }
@@ -38,6 +38,11 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        try {
+            Product product = productRepository.getReferenceById(id);
+            productRepository.delete(product);
+        } catch (NotFoundException e) {
+            throw new NotFoundException("Product not found, id: %s".formatted(id));
+        }
     }
 }

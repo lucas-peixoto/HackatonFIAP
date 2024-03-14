@@ -1,47 +1,70 @@
 package br.com.fiap.services.exception;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    public static Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
+    private final MessageSource messageSource;
+
+    public GlobalExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    private List<FieldMessage> getFieldMessages(MethodArgumentNotValidException exception) {
+        List<FieldMessage> invalidParams = new ArrayList<>();
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+        fieldErrors.forEach((error) -> {
+            String errorMessage = messageSource.getMessage(error, LocaleContextHolder.getLocale());
+            invalidParams.add(new FieldMessage(error.getField(), errorMessage));
+        });
+
+        return invalidParams;
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        List<ValidationFieldError> fieldErrorList = e.getFieldErrors().stream().map(fieldError -> new ValidationFieldError(fieldError.getField(), fieldError.getDefaultMessage())).toList();
-        logger.error("Validation errors: {}", fieldErrorList);
-        return ResponseEntity.badRequest().body(new ExceptionResponse.ValidationFieldErrors(fieldErrorList));
-    }
+    ResponseEntity<ProblemDetail> validationError(MethodArgumentNotValidException exception) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        List<FieldMessage> invalidParams = getFieldMessages(exception);
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException() {
-        logger.error("Invalid JSON body");
-        return ResponseEntity.badRequest().body(new ExceptionResponse.ExceptionMessage("Invalid JSON body"));
-    }
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(httpStatus, exception.getLocalizedMessage());
+        problemDetail.setType(URI.create("http://localhost:8083/erro-de-validacao"));
+        problemDetail.setTitle("Erro de validação");
+        problemDetail.setDetail("Um ou mais campos estão com dados incorretos ou o dado já existe");
+        problemDetail.setProperty("invalidParams", invalidParams);
 
-    @ExceptionHandler(ValidationFieldsException.class)
-    public ResponseEntity<ExceptionResponse> handleValidationFieldsException(ValidationFieldsException e) {
-        logger.error(e.getMessage(), e);
-        return ResponseEntity.badRequest().body(new ExceptionResponse.ValidationFieldErrors(e.getFieldErrors()));
+        return ResponseEntity.status(httpStatus).body(problemDetail);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleNotFoundException() {
-        return ResponseEntity.notFound().build();
+    ResponseEntity<ProblemDetail> controllerNotfound(NotFoundException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getLocalizedMessage());
+        problemDetail.setType(URI.create("http://localhost:8083/not-found"));
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(problemDetail);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-        logger.error(e.getMessage(), e);
-        return ResponseEntity.internalServerError().body(new ExceptionResponse.ExceptionMessage(e.getMessage()));
+    ResponseEntity<ProblemDetail> exception(Exception exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getLocalizedMessage());
+        problemDetail.setType(URI.create("http://localhost:8083/bad-request"));
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(problemDetail);
     }
 }
