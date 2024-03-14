@@ -15,7 +15,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UserRequest request) {
         User user = userService.create(request);
 
@@ -28,14 +28,14 @@ public class UserController {
         return ResponseEntity.ok(new UserResponse(user));
     }
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable) {
         Page<User> users = userService.findAll(pageable);
 
         return ResponseEntity.ok(users.map(UserResponse::new));
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserResponse> update(@Valid @RequestBody UserRequest userRequest, @PathVariable Long id) {
         User user = userService.update(userRequest, id);
 
