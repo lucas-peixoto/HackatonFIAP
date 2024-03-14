@@ -16,13 +16,13 @@ public class BuildingController {
     }
 
     @PostMapping("/location/{id}/buildings")
-    public ResponseEntity<BuildingResponse> create(@PathVariable Long id, @Valid BuildingCreateRequest buildingRequest) {
+    public ResponseEntity<BuildingResponse> create(@PathVariable Long id, @Valid @RequestBody BuildingCreateRequest buildingRequest) {
         Building building = buildingService.create(id, buildingRequest);
         return ResponseEntity.ok(new BuildingResponse(building));
     }
 
     @PutMapping("/buildings/{id}")
-    public ResponseEntity<BuildingResponse> update(@PathVariable Long id, @Valid BuildingUpdateRequest buildingRequest) {
+    public ResponseEntity<BuildingResponse> update(@PathVariable Long id, @Valid @RequestBody BuildingUpdateRequest buildingRequest) {
         Building building = buildingService.update(id, buildingRequest);
         return ResponseEntity.ok(new BuildingResponse(building));
     }

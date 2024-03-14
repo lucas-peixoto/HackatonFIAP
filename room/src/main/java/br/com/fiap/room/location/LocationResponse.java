@@ -1,8 +1,8 @@
 package br.com.fiap.room.location;
 
+import br.com.fiap.room.address.AddressResponse;
 import br.com.fiap.room.building.BuildingResponse;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 

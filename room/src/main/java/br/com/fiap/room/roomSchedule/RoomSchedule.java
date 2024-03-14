@@ -30,4 +30,28 @@ public class RoomSchedule {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Long getRoomId() {
+        return room.getId();
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
 }

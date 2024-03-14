@@ -16,13 +16,13 @@ public class RoomController {
     }
 
     @PostMapping("/building/{id}/rooms")
-    public ResponseEntity<RoomResponse> create(@PathVariable Long id, @Valid RoomCreateRequest roomCreateRequest) {
+    public ResponseEntity<RoomResponse> create(@PathVariable Long id, @Valid @RequestBody RoomCreateRequest roomCreateRequest) {
         Room room = roomService.create(id, roomCreateRequest);
         return ResponseEntity.ok(new RoomResponse(room));
     }
 
     @PutMapping("/rooms/{id}")
-    public ResponseEntity<RoomResponse> update(@PathVariable Long id, @Valid RoomUpdateRequest roomUpdateRequest) {
+    public ResponseEntity<RoomResponse> update(@PathVariable Long id, @Valid @RequestBody RoomUpdateRequest roomUpdateRequest) {
         Room room = roomService.update(id, roomUpdateRequest);
         return ResponseEntity.ok(new RoomResponse(room));
     }

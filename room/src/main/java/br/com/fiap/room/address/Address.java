@@ -1,6 +1,5 @@
 package br.com.fiap.room.address;
 
-import br.com.fiap.room.location.AddressRequest;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
@@ -11,6 +10,9 @@ public class Address {
     private String city;
     private String state;
     private String cep;
+
+    public Address() {
+    }
 
     public Address(String street, String number, String city, String state, String cep) {
         this.street = street;

@@ -4,8 +4,7 @@ import br.com.fiap.room.address.Address;
 import br.com.fiap.room.building.Building;
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 public class Location {
@@ -21,7 +20,7 @@ public class Location {
     private Map<Integer, String> amenities;
 
     @OneToMany
-    private List<Building> buildings;
+    private List<Building> buildings = new ArrayList<>();
 
     public Location() {
     }

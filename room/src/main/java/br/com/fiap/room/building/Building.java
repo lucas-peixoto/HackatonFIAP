@@ -3,7 +3,7 @@ package br.com.fiap.room.building;
 import br.com.fiap.room.room.Room;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Building {
@@ -15,7 +15,7 @@ public class Building {
     private String name;
 
     @OneToMany
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<>();
 
     public Building() {
     }

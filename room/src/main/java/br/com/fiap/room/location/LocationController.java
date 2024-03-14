@@ -19,13 +19,13 @@ public class LocationController {
     }
 
     @PostMapping("/locations")
-    public ResponseEntity<LocationResponse> create(@Valid LocationCreateRequest locationRequest) {
+    public ResponseEntity<LocationResponse> create(@Valid @RequestBody LocationCreateRequest locationRequest) {
         Location location = locationService.create(locationRequest);
         return ResponseEntity.ok(new LocationResponse(location));
     }
 
     @PutMapping("/locations/{id}")
-    public ResponseEntity<LocationResponse> update(@PathVariable Long id, @Valid LocationUpdateRequest locationRequest) {
+    public ResponseEntity<LocationResponse> update(@PathVariable Long id, @Valid @RequestBody LocationUpdateRequest locationRequest) {
         Location location = locationService.update(id, locationRequest);
         return ResponseEntity.ok(new LocationResponse(location));
     }

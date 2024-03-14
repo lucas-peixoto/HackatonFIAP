@@ -1,12 +1,5 @@
-package br.com.fiap.room.location;
+package br.com.fiap.room.address;
 
-import br.com.fiap.room.address.Address;
-
-import java.io.Serializable;
-
-/**
- * DTO for {@link br.com.fiap.room.address.Address}
- */
 public record AddressResponse(String street, String number, String city, String state,
                               String cep) {
     public AddressResponse(Address address) {

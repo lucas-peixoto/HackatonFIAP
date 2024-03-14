@@ -1,5 +1,6 @@
 package br.com.fiap.room.location;
 
+import br.com.fiap.room.address.AddressRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
