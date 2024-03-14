@@ -23,6 +23,7 @@ public class UserService {
     }
 
     public User update(UserRequest userRequest, Long id) {
+        userValidator.validateForCreation(userRequest).throwIfInvalid();
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
         user.update(userRequest);
         return userRepository.save(user);
