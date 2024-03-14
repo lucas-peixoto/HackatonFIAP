@@ -39,6 +39,12 @@ public class RoomController {
         return ResponseEntity.ok(rooms.map(RoomResponse::new));
     }
 
+    @PostMapping("/rooms/search")
+    public ResponseEntity<Page<RoomResponse>> search(@Valid @RequestBody RoomSearchRequest roomSearchRequest, Pageable pageable) {
+        Page<Room> rooms = roomService.search(roomSearchRequest, pageable);
+        return ResponseEntity.ok(rooms.map(RoomResponse::new));
+    }
+
     @DeleteMapping("/rooms/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         roomService.delete(id);

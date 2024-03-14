@@ -21,10 +21,6 @@ public class Room {
     @ElementCollection
     private Map<Integer, String> furniture;
 
-    public Long getId() {
-        return id;
-    }
-
     public Room() {
     }
 
@@ -33,6 +29,10 @@ public class Room {
         this.dailyRate = dailyRate;
         this.beds = beds;
         this.furniture = furniture;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Integer getCapacity() {

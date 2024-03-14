@@ -6,6 +6,8 @@ import br.com.fiap.room.exception.NotFoundException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class RoomService {
 
@@ -37,6 +39,10 @@ public class RoomService {
 
     public Page<Room> findAll(Pageable pageable) {
         return roomRepository.findAll(pageable);
+    }
+
+    public Page<Room> search(RoomSearchRequest roomSearchRequest, Pageable pageable) {
+        return roomRepository.findAllAvailable(roomSearchRequest.checkIn(), roomSearchRequest.checkOut(), pageable);
     }
 
     public void delete(Long id) {
