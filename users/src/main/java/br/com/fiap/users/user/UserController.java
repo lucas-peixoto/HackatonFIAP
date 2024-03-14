@@ -4,10 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -21,6 +18,12 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UserRequest request) {
         User user = userService.create(request);
+        return ResponseEntity.ok(new UserResponse(user));
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
+        User user = userService.findById(id);
         return ResponseEntity.ok(new UserResponse(user));
     }
 

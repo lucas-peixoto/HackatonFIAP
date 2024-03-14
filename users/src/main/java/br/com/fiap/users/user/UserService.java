@@ -1,5 +1,6 @@
 package br.com.fiap.users.user;
 
+import br.com.fiap.users.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,9 @@ public class UserService {
 
     public Page<User> search(UserResponse userResponse, Pageable pageable) {
        return userRepository.search(userResponse.name(), userResponse.email(), userResponse.cpf(), userResponse.passport(), pageable);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 }
