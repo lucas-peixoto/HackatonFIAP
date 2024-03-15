@@ -45,4 +45,8 @@ public class ProductItem {
     public Integer getQuantity() {
         return quantity;
     }
+
+    public BigDecimal getSubtotal() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }
 }

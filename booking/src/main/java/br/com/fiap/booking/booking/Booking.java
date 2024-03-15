@@ -5,6 +5,7 @@ import br.com.fiap.booking.room.Room;
 import br.com.fiap.booking.user.User;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,21 @@ public class Booking {
 
     public LocalDate getCheckOut() {
         return checkOut;
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal days = BigDecimal.valueOf(checkOut.toEpochDay() - checkIn.toEpochDay()).add(BigDecimal.ONE);
+
+        for (Room room : rooms) {
+            total = total.add(room.getDailyRate().multiply(days));
+        }
+
+        for (ProductItem productItem : productItems) {
+            total = total.add(productItem.getSubtotal());
+        }
+
+        return total;
     }
 
     public void confirm() {
