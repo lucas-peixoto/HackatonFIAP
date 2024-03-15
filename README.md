@@ -20,7 +20,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
 ## User
 
 ### Create: 
-- URI: http://localhost:8081/users/users
+- URI: http://localhost:8081/api/users/users
 - Method: POST
 
 - Curl:
@@ -52,19 +52,43 @@ curl -X POST \
     }
 ```
 
-
-
 ### FindById
-- URI: http://localhost:8081/users/users/{id}
+- URI: http://localhost:8081/api/users/users/{id}
 - Method: GET
 - Curl: 
 ```
 curl -X GET \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  http://localhost:8081/api/users/users?page=1&size=10
+  http://localhost:8081/api/users/users/1
 ```
 
+### FindAll
+- URI: http://localhost:8081/api/users/users/
+- Method: GET
+- Curl:
+```
+curl -X GET \
+  http://localhost:8081/api/users/users?page=0&size=10
+```
 
-
+### Update
+- URI: http://localhost:8081/api/users/users/{id}
+- Method: PUT
+- Curl:
+```
+curl -X PUT \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 123,
+    "name": "João Silva",
+    "country": "Brasil",
+    "cpf": "12345678970",
+    "passport": "123456780",
+    "birthDate": "1990-01-01",
+    "address": "Rua das Flores, 123",
+    "phone": "+55 11 98765432",
+    "email": "joaosilva23@exemplo.com"
+  }' \
+  http://localhost:8081/api/users/users/1
+```
 
 
