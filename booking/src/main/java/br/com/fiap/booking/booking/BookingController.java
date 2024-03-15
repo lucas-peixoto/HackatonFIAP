@@ -19,13 +19,19 @@ public class BookingController {
 
     @PostMapping("/rooms/search")
     public ResponseEntity<Page<RoomResponse>> searchRooms(@Valid @RequestBody RoomSearchRequest roomSearchRequest) {
-        Page<Room> roomsAvailable = roomService.search(roomSearchRequest);
+        Page<RoomClientResponse> roomsAvailable = roomService.search(roomSearchRequest);
         return ResponseEntity.ok(roomsAvailable.map(RoomResponse::new));
     }
 
     @PostMapping("/booking/start")
     public ResponseEntity<BookingResponse> startBooking(@Valid @RequestBody BookingStartRequest bookingStartRequest) {
         Booking booking = bookingService.start(bookingStartRequest);
+        return ResponseEntity.ok(new BookingResponse(booking));
+    }
+
+    @GetMapping("/booking/{id}")
+    public ResponseEntity<BookingResponse> findById(@PathVariable Long id) {
+        Booking booking = bookingService.findById(id);
         return ResponseEntity.ok(new BookingResponse(booking));
     }
 

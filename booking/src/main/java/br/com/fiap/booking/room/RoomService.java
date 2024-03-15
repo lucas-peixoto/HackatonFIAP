@@ -12,7 +12,7 @@ public class RoomService {
         this.roomClient = roomClient;
     }
 
-    public Page<Room> search(RoomSearchRequest roomSearchRequest) {
+    public Page<RoomClientResponse> search(RoomSearchRequest roomSearchRequest) {
         return roomClient.search(roomSearchRequest);
     }
 }

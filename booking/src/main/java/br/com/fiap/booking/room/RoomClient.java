@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.*;
 public interface RoomClient {
 
     @PostMapping("/rooms/search")
-//    @RequestMapping(method = RequestMethod.POST, path = "/rooms/search", consumes = "application/json")
-    Page<Room> search(RoomSearchRequest roomSearchRequest);
+    Page<RoomClientResponse> search(RoomSearchRequest roomSearchRequest);
 
     @PostMapping("/roomSchedule/reserve")
-//    @RequestMapping(method = RequestMethod.POST, path = "/rooms/search", consumes = "application/json")
     RoomSchedule schedule(RoomReserveRequest roomReserveRequest);
+
+    @GetMapping("/rooms/{roomId}")
+    RoomClientResponse getRoomById(@PathVariable Long roomId);
 }

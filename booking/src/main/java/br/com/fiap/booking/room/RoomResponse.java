@@ -8,4 +8,8 @@ public record RoomResponse(Long id, Integer capacity, BigDecimal dailyRate, Map<
     public RoomResponse(Room room) {
         this(room.getId(), room.getCapacity(), room.getDailyRate(), room.getBeds(), room.getFurniture());
     }
+
+    public RoomResponse(RoomClientResponse room) {
+        this(room.getId(), room.getCapacity(), room.getDailyRate(), room.getBeds(), room.getFurniture());
+    }
 }
