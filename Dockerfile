@@ -4,22 +4,31 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update && apt-get install -y maven
+COPY --chmod=0777 run.sh .
 
-RUN ./build.sh
+RUN apt-get update
 
-COPY eureka/target/*.jar eureka.jar
+RUN apt-get install -y maven
 
-COPY gateway/target/*.jar gateway.jar
+RUN mvn clean package -DskipTests=true -f eureka/pom.xml \
+    && mvn clean package -DskipTests=true -f gateway/pom.xml \
+    && mvn clean package -DskipTests=true -f room/pom.xml \
+    && mvn clean package -DskipTests=true -f services/pom.xml \
+    && mvn clean package -DskipTests=true -f users/pom.xml \
+    && mvn clean package -DskipTests=true -f booking/pom.xml
 
-COPY room/target/*.jar room.jar
+RUN mv -rf eureka/target/*.jar eureka.jar
 
-COPY services/target/*.jar services.jar
+RUN mv -rf gateway/target/*.jar gateway.jar
 
-COPY user/target/*.jar user.jar
+RUN mv -rf room/target/*.jar room.jar
 
-COPY booking/target/*.jar booking.jar
+RUN mv -rf services/target/*.jar services.jar
+
+RUN mv -rf users/target/*.jar users.jar
+
+RUN mv -rf booking/target/*.jar booking.jar
 
 EXPOSE 8081
 
-ENTRYPOINT exec run.sh
+ENTRYPOINT ["./run.sh"]
