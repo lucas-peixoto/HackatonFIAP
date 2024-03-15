@@ -19,7 +19,7 @@ public class Location {
     @ElementCollection
     private Map<Integer, String> amenities;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Building> buildings = new ArrayList<>();
 
     public Location() {
