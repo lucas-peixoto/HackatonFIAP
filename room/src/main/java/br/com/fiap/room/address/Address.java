@@ -2,6 +2,8 @@ package br.com.fiap.room.address;
 
 import jakarta.persistence.Embeddable;
 
+import java.util.Objects;
+
 @Embeddable
 public class Address {
 
@@ -40,5 +42,18 @@ public class Address {
 
     public String getCep() {
         return cep;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(street, address.street) && Objects.equals(number, address.number) && Objects.equals(city, address.city) && Objects.equals(state, address.state) && Objects.equals(cep, address.cep);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(street, number, city, state, cep);
     }
 }
