@@ -14,6 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Testcontainers
@@ -50,8 +51,24 @@ class RoomScheduleRepositoryTest {
         RoomSchedule roomSchedule = new RoomSchedule(room, 1L, checkIn, checkOut);
         roomScheduleRepository.save(roomSchedule);
 
-        boolean isAvailable = roomScheduleRepository.existsByRoom_IdAndCheckInBetweenAndCheckOutBetween(room.getId(), checkIn.plusDays(1), checkOut, checkIn.plusDays(1), checkOut);
+        boolean isAvailable = roomScheduleRepository.existsByRoom_IdAndCheckInBetweenAndCheckOutBetween(room.getId(), checkIn.plusDays(3), checkOut.plusDays(3), checkIn.plusDays(3), checkOut.plusDays(3));
 
         assertTrue(isAvailable);
+    }
+
+    @Test
+    public void roomIsNotAvailablewhenBookingExistsButNotOverlapping() {
+        LocalDate checkIn = LocalDate.now();
+        LocalDate checkOut = checkIn.plusDays(2);
+
+        Room room = roomRepository.save(new Room(2, BigDecimal.valueOf(50L), null, null));
+        roomRepository.save(room);
+
+        RoomSchedule roomSchedule = new RoomSchedule(room, 1L, checkIn, checkOut);
+        roomScheduleRepository.save(roomSchedule);
+
+        boolean isAvailable = roomScheduleRepository.existsByRoom_IdAndCheckInBetweenAndCheckOutBetween(room.getId(), checkIn.plusDays(1), checkOut, checkIn.plusDays(1), checkOut);
+
+        assertFalse(isAvailable);
     }
 }
