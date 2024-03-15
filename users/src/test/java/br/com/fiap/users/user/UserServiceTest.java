@@ -43,7 +43,7 @@ class UserServiceTest {
     }
 
     @Test
-    void create_should_return_null_when_user_email_already_exists() {
+    void create_should_not_create_an_user_if_email_already_exists() {
         when(userRepository.existsByEmail(userRequest.email())).thenReturn(true);
         when(userValidator.validateForCreation(userRequest)).thenReturn(mock(ValidationResult.class));
 
