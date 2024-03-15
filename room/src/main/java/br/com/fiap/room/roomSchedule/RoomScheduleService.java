@@ -23,8 +23,4 @@ public class RoomScheduleService {
         RoomSchedule roomSchedule = new RoomSchedule(room, roomScheduleRequest.clientId(), roomScheduleRequest.checkIn(), roomScheduleRequest.checkOut());
         return roomScheduleRepository.save(roomSchedule);
     }
-
-    public boolean isAvailable(Long roomId, LocalDate checkIn, LocalDate checkOut) {
-        return roomScheduleRepository.isAvailable(roomId, checkIn, checkOut);
-    }
 }

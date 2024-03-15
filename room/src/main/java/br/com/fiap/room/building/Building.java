@@ -14,7 +14,7 @@ public class Building {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Room> rooms = new ArrayList<>();
 
     public Building() {
