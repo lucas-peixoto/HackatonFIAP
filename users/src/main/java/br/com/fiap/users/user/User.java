@@ -72,14 +72,14 @@ public class User {
         return email;
     }
 
-    public void update(UserRequest userRequest) {
-        this.name = userRequest.name();
-        this.country = userRequest.country();
-        this.cpf = userRequest.cpf();
-        this.passport = userRequest.passport();
-        this.birthDate = userRequest.birthDate();
-        this.address = userRequest.address();
-        this.phone = userRequest.phone();
-        this.email = userRequest.email();
+    public void update(UserUpdateRequest userUpdateRequest) {
+        this.name = userUpdateRequest.name();
+        this.country = userUpdateRequest.country();
+        this.cpf = userUpdateRequest.cpf();
+        this.passport = userUpdateRequest.passport();
+        this.birthDate = userUpdateRequest.birthDate();
+        this.address = userUpdateRequest.address();
+        this.phone = userUpdateRequest.phone();
+        this.email = userUpdateRequest.email();
     }
 }

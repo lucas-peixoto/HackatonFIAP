@@ -16,21 +16,21 @@ public class UserService {
         this.userValidator = userValidator;
     }
 
-    public User create(UserRequest userRequest) {
-        userValidator.validateForCreation(userRequest).throwIfInvalid();
-        User user = new User(userRequest.name(), userRequest.country(), userRequest.cpf(), userRequest.passport(), userRequest.birthDate(), userRequest.address(), userRequest.phone(), userRequest.email());
+    public User create(UserCreateRequest userCreateRequest) {
+        userValidator.validateForCreation(userCreateRequest).throwIfInvalid();
+        User user = new User(userCreateRequest.name(), userCreateRequest.country(), userCreateRequest.cpf(), userCreateRequest.passport(), userCreateRequest.birthDate(), userCreateRequest.address(), userCreateRequest.phone(), userCreateRequest.email());
         return userRepository.save(user);
     }
 
-    public User update(UserRequest userRequest, Long id) {
-        userValidator.validateForCreation(userRequest).throwIfInvalid();
+    public User update(UserUpdateRequest userUpdateRequest, Long id) {
+        userValidator.validateForUpdate(userUpdateRequest).throwIfInvalid();
         User user = userRepository.findById(id).orElseThrow(NotFoundException::new);
-        user.update(userRequest);
+        user.update(userUpdateRequest);
         return userRepository.save(user);
     }
 
     public Page<User> findAll(Pageable pageable) {
-       return   userRepository.findAll(pageable);
+       return userRepository.findAll(pageable);
     }
 
     public User findById(Long id) {
