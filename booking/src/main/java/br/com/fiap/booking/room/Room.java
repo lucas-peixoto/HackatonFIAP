@@ -49,6 +49,10 @@ public class Room {
         return dailyRate;
     }
 
+    public void setDailyRate(BigDecimal dailyRate) {
+        this.dailyRate = dailyRate;
+    }
+
     public Map<Integer, String> getBeds() {
         return beds;
     }

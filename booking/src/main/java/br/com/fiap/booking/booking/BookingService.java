@@ -1,11 +1,11 @@
 package br.com.fiap.booking.booking;
 
+import br.com.fiap.booking.exception.NotFoundException;
 import br.com.fiap.booking.mailer.MailService;
 import br.com.fiap.booking.product.*;
 import br.com.fiap.booking.room.*;
 import br.com.fiap.booking.user.User;
 import br.com.fiap.booking.user.UserClient;
-import jakarta.ws.rs.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -64,6 +64,6 @@ public class BookingService {
     }
 
     public Booking findById(Long id) {
-        return bookingRepository.findById(id).orElseThrow(NotFoundException::new);
+        return bookingRepository.findById(id).orElseThrow(br.com.fiap.booking.exception.NotFoundException::new);
     }
 }
