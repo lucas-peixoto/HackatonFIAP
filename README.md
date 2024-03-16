@@ -22,6 +22,8 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
 > Arquitetura
 - Microserviços
 
+## Descrição de endpoints
+
 > User
 
 ##### Create: 
