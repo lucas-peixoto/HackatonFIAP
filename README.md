@@ -17,9 +17,9 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
 
 # MicroServices
 
-## User
+### User
 
-### Create: 
+##### Create: 
 - URI: http://localhost:8081/api/users/users
 - Method: POST
 
@@ -52,7 +52,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
     }
 ```
 
-### FindById
+##### FindById
 - URI: http://localhost:8081/api/users/users/{id}
 - Method: GET
 - Curl: 
@@ -61,7 +61,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
       http://localhost:8081/api/users/users/1
 ```
 
-### FindAll
+##### FindAll
 - URI: http://localhost:8081/api/users/users/
 - Method: GET
 - Curl:
@@ -70,7 +70,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
       http://localhost:8081/api/users/users?page=0&size=10
 ```
 
-### Update
+##### Update
 - URI: http://localhost:8081/api/users/users/{id}
 - Method: PUT
 - Curl:
@@ -90,9 +90,11 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
       }' \
       http://localhost:8081/api/users/users/1
 ```
-## Product
+### Service
 
-### Create
+#### Product
+
+###### Create
 - URI: http://localhost:8081/api/services/products
 - Method: POST
 - Curl:
@@ -113,7 +115,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
       "type": "SERVICE"
     }
 ```
-### FindById
+###### FindById
 - URI: http://localhost:8081/api/services/products/{id}
 - Method: GET
 - Curl:
@@ -122,7 +124,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
       http://localhost:8081/api/services/products/1
 ```
 
-### FindAll
+###### FindAll
 
 URI: http://localhost:8081/api/services/products/
 Method: GET
@@ -132,7 +134,7 @@ Curl:
       http://localhost:8081/api/services/products?page=0&size=10
 ```
 
-### Update
+###### Update
 URI: http://localhost:8081/api/services/products/
 Method: PUT
 Curl: 
@@ -144,6 +146,16 @@ Curl:
     "price": 249.99,
     "type": "SERVICE"
   }' http://localhost:8081/api/services/products/1
+```
+
+###### Delete
+URI: http://localhost:8081/api/services/products/
+Method: DELETE
+Curl:
+```bash
+    curl -X DELETE \
+  -H "Content-Type: application/json" \
+  http://localhost:8081/api/services/products/2
 ```
 
 # Room
@@ -221,9 +233,6 @@ curl -X PUT \
   curl -X DELETE \
   http://localhost:8081/api/room/locations/1
 ```
-
-
-
 
 ### Building
 
@@ -371,7 +380,20 @@ curl -X PUT \
   http://localhost:8081/api/room/rooms/1
 ```
 
-### RoomSchedule
+##### Search
+- URI: http://localhost:8081/booking/rooms/search
+- Método: POST
+- Curl:
+```bash
+  curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "checkIn": "2024-08-01",
+    "checkOut": "2024-08-05"
+  }' http://localhost:8081/api/booking/rooms/search
+```
+
+##### RoomSchedule
 - URI: http://localhost:8081/api/room/roomSchedule/reserve
 - Método: POST
 - Curl:
@@ -387,7 +409,7 @@ curl -X PUT \
   ``` 
 ## Booking
 
-### Create
+##### Create
 - URI: http://localhost:8081/api/booking/booking/start
 - Method: POST
 CURL:
@@ -408,7 +430,7 @@ CURL:
         "checkOut": "2024-03-25"
       }' http://localhost:8081/api/booking/booking/start
 ```
-### Search
+##### Search
 - URI: http://localhost:8081/api/booking/rooms/search
 - Method: POST
   CURL:
@@ -420,7 +442,7 @@ CURL:
       "checkOut": "2024-08-05"
 }' http://localhost:8081/api/booking/rooms/search
 ```
-### FindById
+##### FindById
 - URI: http://localhost:8081/api/booking/booking/{id}
 - Method: GET
   CURL: 
@@ -428,7 +450,7 @@ CURL:
     curl -X GET http://localhost:8081/api/booking/booking/1
 ```
 
-### Confirm
+##### Confirm
 - URI: http://localhost:8081/api/booking/booking/{id}/confirm
 - Method: POST
 - CURL:
