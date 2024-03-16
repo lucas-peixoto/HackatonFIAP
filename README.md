@@ -431,7 +431,7 @@ CURL:
 ### Confirm
 - URI: http://localhost:8081/api/booking/booking/{id}/confirm
 - Method: POST
-  CURL:
+- CURL:
  ```bash
     curl -X POST http://localhost:8081/api/booking/booking/1/confirm
 ```
