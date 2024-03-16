@@ -385,6 +385,56 @@ curl -X PUT \
     "checkOut": "2024-03-25"
   }' http://localhost:8081/api/room/roomSchedule/reserve
   ``` 
+## Booking
+
+### Create
+- URI: http://localhost:8081/api/booking/booking/start
+- Method: POST
+CURL:
+ ```bash
+    curl -X POST \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "clientId": 2,
+        "peopleAmount": 2,
+        "roomsIds": [1],
+        "products": [
+          {
+            "productId": 1,
+            "quantity": 1
+          }
+        ],
+        "checkIn": "2024-03-20",
+        "checkOut": "2024-03-25"
+      }' http://localhost:8081/api/booking/booking/start
+```
+### Search
+- URI: http://localhost:8081/api/booking/rooms/search
+- Method: POST
+  CURL:
+ ```bash
+    curl --request POST \
+     -H 'Content-Type: application/json' \
+    --data '{
+      "checkIn": "2024-08-01",
+      "checkOut": "2024-08-05"
+}' http://localhost:8081/api/booking/rooms/search
+```
+### FindById
+- URI: http://localhost:8081/api/booking/booking/{id}
+- Method: GET
+  CURL: 
+ ```bash
+    curl -X GET http://localhost:8081/api/booking/booking/1
+```
+
+### Confirm
+- URI: http://localhost:8081/api/booking/booking/{id}/confirm
+- Method: POST
+  CURL:
+ ```bash
+    curl -X POST http://localhost:8081/api/booking/booking/1/confirm
+```
 
 
 
