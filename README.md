@@ -15,7 +15,12 @@ Gestão de Quartos: o módulo de Gestão de Quartos, faz a gestão (Inclusão, A
 Consulta) de todos os quartos por propriedade, ou seja, caso tenhamos mais de uma localidade ou prédio,
 o módulo consegue diferenciar quais quartos estão em qual prédio de qual localidade.
 
-# MicroServices
+# Como executar a aplicação:
+- cd HackatonFIAP/
+- docker compose up
+
+# Arquitetura
+Microserviços
 
 > User
 
