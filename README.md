@@ -19,7 +19,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
 - cd HackatonFIAP/
 - docker compose up
 
-# Arquitetura
+## Arquitetura
 Microserviços
 
 > User
