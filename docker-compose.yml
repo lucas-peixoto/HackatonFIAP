@@ -1,9 +1,11 @@
+version: '3'
+
 services:
 
   db:
-    image: mysql:8.3.0
+    image: "mysql:8.3.0"
     ports:
-      - 3307:3306
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: hackathon
@@ -12,5 +14,6 @@ services:
     build: .
     ports:
       - "8081:8081"
+      - "8761:8761"
     depends_on:
       - db
