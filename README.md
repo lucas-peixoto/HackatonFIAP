@@ -20,7 +20,7 @@ o módulo consegue diferenciar quais quartos estão em qual prédio de qual loca
 - docker compose up
 
 > Arquitetura
-Microserviços
+- Microserviços
 
 > User
 
